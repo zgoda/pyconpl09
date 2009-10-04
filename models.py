@@ -2,10 +2,11 @@
 
 import datetime
 
-from mongokit import MongoDocument as Document
+import pymongo
+import mongokit
 
 
-class BlogPost(Document):
+class BlogPost(mongokit.MongoDocument):
     db_name = 'pycon09'
     collection_name = 'blog'
     structure = {
@@ -14,10 +15,12 @@ class BlogPost(Document):
         'author': unicode,
         'date_added': datetime.datetime,
         'pub_date': datetime.datetime,
+        'is_draft': bool,
     }
     required_fields = ('title', 'author', 'text')
     default_values = {
-        'date_added': datetime.datetime.utcnow
+        'date_added': datetime.datetime.utcnow,
+        'is_draft': False,
     }
     use_dot_notation = True
     indexes = [
@@ -30,3 +33,13 @@ class BlogPost(Document):
         },
     ]
 
+    def save(self, uuid=True, validate=None, safe=True, *args, **kwargs):
+        if self.pub_date is None:
+            self.is_draft = True
+        super(BlogPost, self).save(uuid, validate, safe, *args, **kwargs)
+
+    def get_latest(cls, num_latest=10):
+        kw = {
+            'is_draft': False,
+        }
+        cls.all(kw).sort('pub_date', pymongo.DESCENDING)[:num_latest]
