@@ -1,0 +1,6 @@
+^MANIFEST$
+\.py[co]$
+\.tmproj$
+\.kpf$
+\.DS_Store$
+^env$
