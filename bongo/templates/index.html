@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Złote Myśli ery intarwebu{% endblock %}
+
+{% block content %}
+<h1>Złote Myśli</h1>
+{% if entries %}
+<p>Ostatnio dodane</p>
+<ul>
+{% for entry in entries %}
+<li>{{ entry.date_added }} przez {{ entry.author|e }}: "<a href="{{ entry.get_url() }}">{{ entry.text|truncate(50)|e }}</a>"</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Nic jeszcze nie ma.</p>
+{% endif %}
+<h2>Dodaj coś od siebie</h2>
+<form method="post" action=".">
+<p>Twoje pseudo:<br />
+{{ form.author() }}</p>
+<p>Tekst:<br />
+{{ form.text() }}</p>
+<p><input type="submit" value="zapisz" /></p>
+</form>
+{% endblock %}

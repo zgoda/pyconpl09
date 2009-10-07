@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from hashlib import md5
 
 import pymongo
 import mongokit
@@ -10,7 +11,6 @@ class Entry(mongokit.MongoDocument):
     db_name = 'pycon09'
     collection_name = 'bongo'
     structure = {
-        'title': unicode,
         'text': unicode,
         'author': unicode,
         'date_added': datetime.datetime,
@@ -31,11 +31,11 @@ class Entry(mongokit.MongoDocument):
     ]
 
     def save(self, uuid=True, validate=None, safe=True, *args, **kwargs):
-        super(BlogPost, self).save(uuid, validate, safe, *args, **kwargs)
+        super(Entry, self).save(uuid, validate, safe, *args, **kwargs)
 
     @classmethod
     def get_latest(cls, num_latest=10):
-        kw = {
-            'is_draft': False,
-        }
-        return cls.all(kw).sort('date_added', pymongo.DESCENDING).limit(num_latest)
+        return cls.all().sort('date_added', pymongo.DESCENDING).limit(num_latest)
+
+    def get_url(self):
+        return u'/%s/' % self._id
