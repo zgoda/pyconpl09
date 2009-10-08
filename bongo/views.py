@@ -20,6 +20,7 @@ def index(request):
     return render_template('index.html', **ctx)
 
 
+@expose('/<entry_id>/')
 def entry(request, entry_id):
     ctx = {
         'entry': Entry.one({'_id': entry_id}),
