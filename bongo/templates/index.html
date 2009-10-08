@@ -3,7 +3,10 @@
 {% block title %}Złote Myśli ery intarwebu{% endblock %}
 
 {% block content %}
-<h1>Złote Myśli</h1>
+<div class="post">
+<h2 class="title">Złote Myśli</h2>
+<p class="byline">myślenie jest złotem</p>
+<div class="entry">
 {% if entries %}
 <p>Ostatnio dodane</p>
 <ul>
@@ -14,7 +17,7 @@
 {% else %}
 <p>Nic jeszcze nie ma.</p>
 {% endif %}
-<h2>Dodaj coś od siebie</h2>
+<h3 class="title">Dodaj coś od siebie</h3>
 <form method="post" action=".">
 <p>Twoje pseudo:<br />
 {{ form.author() }}</p>
@@ -22,4 +25,6 @@
 {{ form.text() }}</p>
 <p><input type="submit" value="zapisz" /></p>
 </form>
+</div>
+</div>
 {% endblock %}
