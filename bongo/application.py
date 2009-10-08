@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from werkzeug import Request, ClosingIterator
+import os
+
+from werkzeug import Request, ClosingIterator, SharedDataMiddleware
 from werkzeug.exceptions import HTTPException
 
 from bongo.utils import local, local_manager, url_map
@@ -11,8 +13,14 @@ class Bongo(object):
 
     def __init__(self):
         local.application = self
+        self.dispatch = SharedDataMiddleware(self.dispatch, {
+            '/media': os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media'),
+        })
 
     def __call__(self, environ, start_response):
+        return self.dispatch(environ, start_response)
+
+    def dispatch(self, environ, start_response):
         request = Request(environ)
         local.url_adapter = adapter = url_map.bind_to_environ(environ)
         try:
