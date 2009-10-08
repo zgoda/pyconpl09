@@ -1,10 +1,105 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{% block title %}{% endblock %} | Mongo-Bongo</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{% block title %}{% endblock %} | Mongo-Bongo</title>
+<link href="{{ url_for('media', file='css/style.css') }}" rel="stylesheet" type="text/css" media="screen" />
+<link rel="icon" href="{{ url_for('media', file='img/favicon.png') }}" type="image/png" />
 </head>
 <body>
-{% block content %}{% endblock %}
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header">
+			<div id="logo">
+				<h1><a href="/">Mongo-Bongo</a></h1>
+				<h2>złote myśli dla każdego</h2>
+			</div>
+			<div id="search">
+				<form method="get" action="">
+					<fieldset>
+					<input type="text" id="search-text" name="s" value="" />
+					</fieldset>
+				</form>
+			</div>
+			<!-- end #logo -->
+		</div>
+		<!-- end #header -->
+		<div id="menu">
+			<ul>
+				<li class="first"><a href="/">Początek</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">Portfolio</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+		<!-- end #menu -->
+	</div>
+	<!-- end #header-wrapper -->
+	<div id="page">
+		<div id="banner"><a href="#"><img src="{{ url_for('media', file='img/img05.jpg') }}" alt="" /></a></div>
+		<div id="page-bgcontent">
+			<div id="content">
+{% block content %}
+				<div class="post">
+					<h2 class="title">Welcome to Nimbuslike </h2>
+					<p class="byline">by nodethirtythree and freecsstemplates </p>
+					<div class="entry">
+						<p><strong>Nimbuslike</strong> is a free template by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a> and <a href="http://www.freecsstemplates.org">Free CSS Templates</a> released under the <a href="http://creativecommons.org/">Creative Commons Attribution license</a>. The photo above is from <a href="http://www.pdphoto.org">PDPhoto.org</a>. You’re free to use this template for commercial or personal use provided you keep the footer links to our sites intact.  That’s all :)</p>
+						<p>This template is also available as a <a href="http://www.freewpthemes.net">WordPress theme</a>. Check out more WordPress conversions of our templates at <a href="http://www.freewpthemes.net">Free WP Themes</a> and follow me on <a href="http://twitter.com/nodethirtythree">Twitter</a> for news and updates.</p>
+					</div>
+					<div class="meta">
+						<p class="links"><a href="#" class="comments">Comments (64)</a> &nbsp;&nbsp;&nbsp; <a href="#" class="permalink">Full article</a></p>
+					</div>
+				</div>
+				<div class="post">
+					<h2 class="title">Veroeros Sed Consequat</h2>
+					<p class="byline">posted by someone on july 19, 2009</p>
+					<div class="entry">
+						<p>Sed vel quam. Vestibulum pellentesque. Morbi sit amet magna ac lacus dapibus interdum. Donec pede nisl, gravida iaculis, auctor vitae, bibendum sit amet, mauris. Cras adipiscing libero et risus. Donec rutrum tempus massa. Proin at mauris sed <a href="#">elit venenatis porttitor</a>. Morbi quam nisl, fringilla quis.</p>
+						<p>Sagittis nec, adipiscing at, elit. Maecenas sed sem sit amet lectus mattis molestie. Integer quis eros lorem ipsum dolor sit amet veroeros consequat ipsum dolor sit amet veroeros consequat.</p>
+					</div>
+					<div class="meta">
+						<p class="links"><a href="#" class="comments">Comments (64)</a> &nbsp;&nbsp;&nbsp; <a href="#" class="permalink">Full article</a></p>
+					</div>
+				</div>
+{% endblock %}
+			</div>
+			<!-- end #content -->
+			<div id="sidebar">
+				<ul>
+					<li>
+						<h2>blandit sed dolore</h2>
+						<p><strong>Lorem ipsum dolor sit</strong> amet consectetur adipiscing elit. Vivamus sed elit id dolor varius iaculis. Donec accumsan aliquam interdum. eget velit placerat imperdiet. Aenean vulputate felis vitae turpis <a href="#">tempus vehicula tempor dolor </a>dignissim. Aenean at tortor augue.</p>
+					</li>
+					<li>
+						<h2>dolor sit volutpat</h2>
+						<ul>
+							<li><a href="#">Sed accumsan congue</a></li>
+							<li><a href="#"> Nulla dignissim nec augue</a></li>
+							<li><a href="#">Nunc ante elit nulla</a></li>
+							<li><a href="#">Sed suscipit consequat</a></li>
+							<li><a href="#">Cursus sed arcu sed</a></li>
+							<li><a href="#">Nulla dignissim nec augue</a></li>
+							<li><a href="#">Sed accumsan congue</a></li>
+							<li><a href="#">Dignissim lorem augue</a></li>
+							<li><a href="#">Nunc ante elit nulla</a></li>
+							<li><a href="#">Sed suscipit consequat</a></li>
+							<li><a href="#">Cursus sed arcu sed<br />
+								</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!-- end #sidebar -->
+			<div style="clear: both;">&nbsp;</div>
+		</div>
+		<div id="footer">
+			<p>(c) 2009 {{ SITE.name }}. Design by <a href="http://www.nodethirtythree.com/">nodethirtythree</a></p>
+		</div>
+		<!-- end #footer -->
+	</div>
+	<!-- end #page -->
+</div>
 </body>
 </html>
