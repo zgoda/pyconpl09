@@ -3,7 +3,11 @@
 {% block title %}Jedna Złota Myśl{% endblock %}
 
 {% block content %}
-<h1>Złota Myśl: {{ entry.text|truncate(50)|e }}</h1>
+<div class="post">
+<h2 class="title">Złota Myśl</h2>
+<p class="byline">Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}.</p>
+<div class="entry">
 <p><cite>{{ entry.text|e|replace("\n", "<br />") }}</cite></p>
-<p>Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}.</p>
+</div>
+</div>
 {% endblock %}
