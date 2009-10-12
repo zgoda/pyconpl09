@@ -4,6 +4,7 @@ import os
 
 from werkzeug import Local, LocalManager
 from werkzeug import Response
+from werkzeug import import_string
 from werkzeug.routing import Map, Rule
 from jinja2 import Environment, FileSystemLoader
 
@@ -32,9 +33,11 @@ env = Environment(loader=FileSystemLoader(os.path.join(os.path.abspath(os.path.d
 env.globals['url_for'] = url_for
 
 def base_context():
-    return {
-        'SITE': settings.SITE,
-    }
+    base = {}
+    for ctx_name in settings.TEMPLATE_CONTEXT_PROCESSORS:
+        ctx_processor = import_string(ctx_name)
+        base.update(ctx_processor(local.request))
+    return base
 
 def render_template(template, **context):
     ctx = base_context()
