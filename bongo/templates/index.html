@@ -4,11 +4,11 @@
 
 {% block content %}
 <div class="post">
-<h2 class="title">Złote Myśli</h2>
+<h2 class="title">Złote Myśli&trade;</h2>
 <p class="byline">myślenie jest złotem</p>
 <div class="entry">
 {% if num_entries %}
-<p>Ostatnio dodane</p>
+<p>Kilka ostatnio dodanych sztuk, dla podkręcenia apetytu</p>
 <ul>
 {% for entry in entries %}
 <li>{{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez {{ entry.author|e }}: "<a href="{{ entry.get_url() }}">{{ entry.text|truncate(50)|e }}</a>" {% if entry.comments.count() %}(komentarzy: {{ entry.comments.count() }}){% endif %}</li>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Złote Myśli ery intarwebu{% endblock %}
+
+{% block content %}
+<div class="post">
+<h2 class="title">Złote Myśli</h2>
+<p class="byline">myślenie jest złotem</p>
+<div class="entry">
+<p>Wszystkie złote myśli, jakie dodali nasi użytkownicy</p>
+<ul>
+{% for entry in pagination.entries %}
+<li>{{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez {{ entry.author|e }}: "<a href="{{ entry.get_url() }}">{{ entry.text|truncate(50)|e }}</a>" {% if entry.comments.count() %}(komentarzy: {{ entry.comments.count() }}){% endif %}</li>
+{% endfor %}
+</ul>
+<div class="pagination">
+{% if pagination.has_previous %}<a href="{{ pagination.previous }}">&laquo; Poprzednia</a>{% else %}<span class="inactive">&laquo; Poprzednia</span>{% endif %} | {{ pagination.page }} | {% if pagination.has_next %}<a href="{{ pagination.next }}">Następna &raquo;</a>{% else %}<span class="inactive">Następna &raquo;</span>{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}
