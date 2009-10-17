@@ -27,10 +27,6 @@
 		<div id="menu">
 			<ul>
 				<li class="first"><a href="/">Początek</a></li>
-				<li><a href="#">Services</a></li>
-				<li><a href="#">Portfolio</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Contact</a></li>
 			</ul>
 		</div>
 		<!-- end #menu -->
@@ -73,20 +69,14 @@
 						<p><strong>Złote myśli przychodzą nagle</strong>, i nagle odchodzą. Warto je zapisać dla potomności.</p>
 					</li>
 					<li>
-						<h2>dolor sit volutpat</h2>
-						<ul>
-							<li><a href="#">Sed accumsan congue</a></li>
-							<li><a href="#"> Nulla dignissim nec augue</a></li>
-							<li><a href="#">Nunc ante elit nulla</a></li>
-							<li><a href="#">Sed suscipit consequat</a></li>
-							<li><a href="#">Cursus sed arcu sed</a></li>
-							<li><a href="#">Nulla dignissim nec augue</a></li>
-							<li><a href="#">Sed accumsan congue</a></li>
-							<li><a href="#">Dignissim lorem augue</a></li>
-							<li><a href="#">Nunc ante elit nulla</a></li>
-							<li><a href="#">Sed suscipit consequat</a></li>
-							<li><a href="#">Cursus sed arcu sed</a></li>
-						</ul>
+{% block side1 %}
+<h2>ostatnio dodane</h2>
+<ul>
+{% for entry in LATEST %}
+<li><a href="{{ entry.get_url() }}">{{ entry.text|truncate(40)|e }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
 					</li>
 				</ul>
 			</div>
