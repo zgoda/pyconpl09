@@ -7,4 +7,11 @@ class RequestProcessor(object):
         pass
 
     def process_response(self, request, response):
-        pass
+        return response
+
+
+class SessionRequestProcessor(RequestProcessor):
+
+    def process_request(self, request):
+        session = request.environ.get('werkzeug.session')
+        request.session = session

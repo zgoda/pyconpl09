@@ -11,7 +11,7 @@ from bongo.forms import EntryForm, CommentForm
 
 @expose('/')
 def index(request):
-    form = EntryForm(request.form)
+    form = EntryForm(author=request.session.get('username'))
     entries = Entry.get_latest()
     ctx = {
         'form': form,
@@ -36,9 +36,13 @@ def entries(request, page):
 
 @expose('/dodaj/')
 def add_entry(request):
-    form = EntryForm(request.form)
+    if request.method == 'POST':
+        form = EntryForm(request.form)
+    else:
+        form = EntryForm(author=request.session.get('username'))
     if request.method == 'POST' and form.validate():
         entry = form.save()
+        request.session['username'] = entry.author
         return redirect(entry.get_url())
     ctx = {
         'form': form
@@ -51,9 +55,13 @@ def entry(request, entry_id):
     entry = Entry.one({'_id': entry_id})
     if not entry:
         raise NotFound()
-    form = CommentForm(request.form)
+    if request.method == 'POST':
+        form = CommentForm(request.form)
+    else:
+        form = CommentForm(author=request.session.get('username'))
     if request.method == 'POST' and form.validate():
-        form.save(entry)
+        comment = form.save(entry)
+        request.session['username'] = comment.author
         return redirect(entry.get_url())
     ctx = {
         'entry': entry,
