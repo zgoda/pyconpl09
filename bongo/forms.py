@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from hashlib import md5
-
 import wtforms as forms
 from wtforms import validators
 
-from bongo.models import Entry
+from bongo.models import Entry, Comment
 
 
 class EntryForm(forms.Form):
@@ -14,8 +12,18 @@ class EntryForm(forms.Form):
 
     def save(self):
         e = Entry()
-        e['_id'] = md5(self.text.data.encode('utf-8')).hexdigest()
         e.author = self.author.data
         e.text = self.text.data
         e.save()
         return e
+
+
+class CommentForm(EntryForm):
+
+    def save(self, entry):
+        c = Comment()
+        c['entry'] = entry
+        c['author'] = self.author.data
+        c['text'] = self.text.data
+        c.save()
+        return c

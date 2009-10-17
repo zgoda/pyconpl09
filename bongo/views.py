@@ -2,11 +2,10 @@
 
 from werkzeug import redirect
 from werkzeug.exceptions import NotFound
-from pymongo.dbref import DBRef
 
 from bongo.utils import expose, render_template
-from bongo.models import Entry, Comment
-from bongo.forms import EntryForm
+from bongo.models import Entry
+from bongo.forms import EntryForm, CommentForm
 
 
 @expose('/')
@@ -29,10 +28,12 @@ def entry(request, entry_id):
     entry = Entry.one({'_id': entry_id})
     if not entry:
         raise NotFound
-    comments = Comment.all({'entry': DBRef('entries', entry_id)})
+    form = CommentForm(request.form)
+    if request.method == 'POST' and form.validate():
+        form.save(entry)
+        return redirect(entry.get_url())
     ctx = {
         'entry': entry,
-        'comments': comments,
-        'num_comments': comments.count(),
+        'form': form,
     }
     return render_template('entry.html', **ctx)

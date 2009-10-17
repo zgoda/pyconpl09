@@ -4,6 +4,7 @@ import datetime
 from hashlib import md5
 
 import pymongo
+from pymongo.dbref import DBRef
 import mongokit
 
 
@@ -32,6 +33,8 @@ class Entry(mongokit.MongoDocument):
     ]
 
     def save(self, uuid=True, validate=None, safe=True, *args, **kwargs):
+        if self.get('_id') is None:
+            self['_id'] = md5(self['text'].encode('utf-8')).hexdigest()
         super(Entry, self).save(uuid, validate, safe, *args, **kwargs)
 
     @classmethod
@@ -40,6 +43,18 @@ class Entry(mongokit.MongoDocument):
 
     def get_url(self):
         return u'/%s/' % self._id
+
+    @property
+    def next_by_date(self):
+        return self.__class__.all().sort('date_added', pymongo.ASCENDING).limit(1)
+
+    @property
+    def prev_by_date(self):
+        return self.__class__.all().sort('date_added', pymongo.DESCENDING).limit(1)
+
+    @property
+    def comments(self):
+        return Comment.all({'entry': DBRef(self.collection_name, self['_id'])}).sort('date_added', pymongo.DESCENDING)
 
 
 class Comment(mongokit.MongoDocument):
@@ -62,3 +77,8 @@ class Comment(mongokit.MongoDocument):
             'fields': ['date_added', 'entry'],
         },
     ]
+
+    def save(self, uuid=True, validate=None, safe=True, *args, **kwargs):
+        if self.get('_id') is None:
+            self['_id'] = md5('%s-%s' % (self['author'].encode('utf-8'), self['text'].encode('utf-8'))).hexdigest()
+        super(Comment, self).save(uuid, validate, safe, *args, **kwargs)
