@@ -9,7 +9,7 @@ import mongokit
 
 class Entry(mongokit.MongoDocument):
     db_name = 'pycon09'
-    collection_name = 'bongo'
+    collection_name = 'entries'
     structure = {
         'text': unicode,
         'author': unicode,
@@ -20,9 +20,10 @@ class Entry(mongokit.MongoDocument):
         'date_added': datetime.datetime.utcnow,
     }
     use_dot_notation = True
+    use_autorefs = True
     indexes = [
         {
-            'fields': 'pub_date',
+            'fields': 'date_added',
         },
         {
             'fields': ['text', 'date_added'],
@@ -39,3 +40,25 @@ class Entry(mongokit.MongoDocument):
 
     def get_url(self):
         return u'/%s/' % self._id
+
+
+class Comment(mongokit.MongoDocument):
+    db_name = 'pycon09'
+    collection_name = 'comments'
+    structure = {
+        'entry': Entry,
+        'text': unicode,
+        'author': unicode,
+        'date_added': datetime.datetime,
+    }
+    required_fields = ('entry', 'text', 'author')
+    default_values = {
+        'date_added': datetime.datetime.utcnow,
+    }
+    use_dot_notation = True
+    use_autorefs = True
+    indexes = [
+        {
+            'fields': ['date_added', 'entry'],
+        },
+    ]

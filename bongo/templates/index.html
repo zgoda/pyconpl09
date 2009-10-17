@@ -7,7 +7,7 @@
 <h2 class="title">Złote Myśli</h2>
 <p class="byline">myślenie jest złotem</p>
 <div class="entry">
-{% if entries %}
+{% if num_entries %}
 <p>Ostatnio dodane</p>
 <ul>
 {% for entry in entries %}
@@ -20,9 +20,9 @@
 <h3 class="title">Dodaj coś od siebie</h3>
 <form method="post" action=".">
 <p>Twoje pseudo:<br />
-{{ form.author() }}</p>
+{{ form.author(size=60) }}</p>
 <p>Tekst:<br />
-{{ form.text() }}</p>
+{{ form.text(cols=60, rows=10) }}</p>
 <p><input type="submit" value="zapisz" /></p>
 </form>
 </div>

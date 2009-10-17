@@ -2,9 +2,10 @@
 
 from werkzeug import redirect
 from werkzeug.exceptions import NotFound
+from pymongo.dbref import DBRef
 
 from bongo.utils import expose, render_template
-from bongo.models import Entry
+from bongo.models import Entry, Comment
 from bongo.forms import EntryForm
 
 
@@ -14,9 +15,11 @@ def index(request):
     if request.method == 'POST' and form.validate():
         entry = form.save()
         return redirect(entry.get_url())
+    entries = Entry.get_latest()
     ctx = {
         'form': form,
-        'entries': list(Entry.get_latest()),
+        'entries': entries,
+        'num_entries': entries.count(),
     }
     return render_template('index.html', **ctx)
 
@@ -26,7 +29,10 @@ def entry(request, entry_id):
     entry = Entry.one({'_id': entry_id})
     if not entry:
         raise NotFound
+    comments = Comment.all({'entry': DBRef('entries', entry_id)})
     ctx = {
         'entry': entry,
+        'comments': comments,
+        'num_comments': comments.count(),
     }
     return render_template('entry.html', **ctx)
