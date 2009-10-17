@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from hashlib import md5
+
 import wtforms as forms
 from wtforms import validators
 
@@ -12,6 +14,7 @@ class EntryForm(forms.Form):
 
     def save(self):
         e = Entry()
+        e['_id'] = md5(self.text.data.encode('utf-8')).hexdigest()
         e.author = self.author.data
         e.text = self.text.data
         e.save()
