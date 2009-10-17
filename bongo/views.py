@@ -11,9 +11,6 @@ from bongo.forms import EntryForm, CommentForm
 @expose('/')
 def index(request):
     form = EntryForm(request.form)
-    if request.method == 'POST' and form.validate():
-        entry = form.save()
-        return redirect(entry.get_url())
     entries = Entry.get_latest()
     ctx = {
         'form': form,
@@ -23,7 +20,19 @@ def index(request):
     return render_template('index.html', **ctx)
 
 
-@expose('/<entry_id>/')
+@expose('/dodaj/')
+def add_entry(request):
+    form = EntryForm(request.form)
+    if request.method == 'POST' and form.validate():
+        entry = form.save()
+        return redirect(entry.get_url())
+    ctx = {
+        'form': form
+    }
+    return render_template('add_entry_form.html', **ctx)
+
+
+@expose('/e/<entry_id>/')
 def entry(request, entry_id):
     entry = Entry.one({'_id': entry_id})
     if not entry:
