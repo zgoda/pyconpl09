@@ -46,11 +46,17 @@ class Entry(mongokit.MongoDocument):
 
     @property
     def next_by_date(self):
-        return self.__class__.all().sort('date_added', pymongo.ASCENDING).limit(1)
+        try:
+            return list(self.__class__.all({'date_added': {'$gt': self.date_added}}).sort('date_added', pymongo.ASCENDING).limit(1))[0]
+        except IndexError:
+            return None
 
     @property
     def prev_by_date(self):
-        return self.__class__.all().sort('date_added', pymongo.DESCENDING).limit(1)
+        try:
+            return list(self.__class__.all({'date_added': {'$lt': self.date_added}}).sort('date_added', pymongo.DESCENDING).limit(1))[0]
+        except IndexError:
+            return None
 
     @property
     def comments(self):

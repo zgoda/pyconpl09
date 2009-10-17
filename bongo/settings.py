@@ -7,6 +7,7 @@ SITE = {
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'bongo.context_processors.site',
+    'bongo.context_processors.latest',
 )
 
 REQUEST_PROCESSORS = ()
