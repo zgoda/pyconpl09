@@ -5,9 +5,25 @@
 {% block content %}
 <div class="post">
 <h2 class="title">Złota Myśl</h2>
-<p class="byline">Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}.</p>
+<p class="byline">Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}</p>
 <div class="entry">
 <p><cite>{{ entry.text|e|replace("\n", "<br />") }}</cite></p>
+{% if entry.comments.count() %}
+<h4 class="title">Komentarze ({{ entry.comments.count() }}):</h4>
+<ul>
+{% for comment in entry.comments %}
+<li>{{ comment.text|e }} - {{ comment.author|e }}, {{ comment.date_added.strftime("%Y-%m-%d") }} o {{ comment.date_added.strftime("%H:%M") }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+<h4 class="title">Skomentujesz?</h4>
+<form method="post" action=".">
+<p>Twoje pseudo:<br />
+{{ form.author(size=60) }}</p>
+<p>Treść komentarza:<br />
+{{ form.text(cols=60, rows=10) }}</p>
+<p><input type="submit" value="zapisz" /></p>
+</form>
 </div>
 </div>
 {% endblock %}
