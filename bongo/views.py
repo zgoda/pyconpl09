@@ -25,7 +25,7 @@ def index(request):
 @expose('/mysli/<int:page>/')
 def entries(request, page):
     entries = Entry.all().sort('date_added', pymongo.ASCENDING)
-    pagination = Pagination(entries, 10, page, 'entries')
+    pagination = Pagination(entries, 20, page, 'entries')
     if pagination.page > 1 and not pagination.entries:
         raise NotFound()
     ctx = {

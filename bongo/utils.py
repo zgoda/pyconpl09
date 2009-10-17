@@ -8,6 +8,8 @@ from werkzeug import import_string
 from werkzeug import cached_property
 from werkzeug.routing import Map, Rule
 from jinja2 import Environment, FileSystemLoader
+import babel.dates
+import pytz
 
 from bongo import settings
 
@@ -27,11 +29,17 @@ def expose(rule, **kw):
         return f
     return decorate
 
+def datetime_format(dt, format):
+    tz = pytz.timezone('Europe/Warsaw')
+    return babel.dates.format_datetime(dt, format, tzinfo=tz)
+
 def url_for(endpoint, _external=False, **values):
     return local.url_adapter.build(endpoint, values, force_external=_external)
 
 env = Environment(loader=FileSystemLoader(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'templates')))
 env.globals['url_for'] = url_for
+# babel
+env.globals['format_datetime'] = datetime_format
 
 def base_context():
     base = {}
