@@ -7,6 +7,8 @@ import pymongo
 from pymongo.dbref import DBRef
 import mongokit
 
+from bongo.utils import url_for
+
 
 class Entry(mongokit.MongoDocument):
     db_name = 'pycon09'
@@ -42,7 +44,7 @@ class Entry(mongokit.MongoDocument):
         return cls.all().sort('date_added', pymongo.DESCENDING).limit(num_latest)
 
     def get_url(self):
-        return u'/%s/' % self._id
+        return url_for('entry', entry_id=self._id)
 
     @property
     def next_by_date(self):

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Dodaj swoją Złotą Myśl&trade;{% endblock %}
+
+{% block content %}
+<div class="post">
+<h2 class="title">Dodaj swoją Złotą Myśl&trade;</h2>
+<p class="byline">żeby nie zniknęła</p>
+<div class="entry">
+<form method="post" action="{{ url_for('add_entry') }}">
+<p>Twoje pseudo:<br />
+{{ form.author(size=60) }}</p>
+<p>Tekst:<br />
+{{ form.text(cols=60, rows=10) }}</p>
+<p><input type="submit" value="zapisz" /></p>
+</form>
+</div>
+</div>
+{% endblock %}
