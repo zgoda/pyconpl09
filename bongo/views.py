@@ -2,8 +2,9 @@
 
 from werkzeug import redirect
 from werkzeug.exceptions import NotFound
+import pymongo
 
-from bongo.utils import expose, render_template
+from bongo.utils import expose, render_template, Pagination
 from bongo.models import Entry
 from bongo.forms import EntryForm, CommentForm
 
@@ -18,6 +19,19 @@ def index(request):
         'num_entries': entries.count(),
     }
     return render_template('index.html', **ctx)
+
+
+@expose('/mysli/', defaults={'page': 1})
+@expose('/mysli/<int:page>/')
+def entries(request, page):
+    entries = Entry.all().sort('date_added', pymongo.ASCENDING)
+    pagination = Pagination(entries, 10, page, 'entries')
+    if pagination.page > 1 and not pagination.entries:
+        raise NotFound()
+    ctx = {
+        'pagination': pagination,
+    }
+    return render_template('entries.html', **ctx)
 
 
 @expose('/dodaj/')
@@ -36,7 +50,7 @@ def add_entry(request):
 def entry(request, entry_id):
     entry = Entry.one({'_id': entry_id})
     if not entry:
-        raise NotFound
+        raise NotFound()
     form = CommentForm(request.form)
     if request.method == 'POST' and form.validate():
         form.save(entry)

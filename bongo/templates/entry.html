@@ -8,7 +8,7 @@
 <p class="byline">Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}</p>
 <div class="entry">
 <div style="text-align:center">
-<p>{% if entry.prev_by_date %}<a href="{{ entry.prev_by_date.get_url() }}">{{ entry.prev_by_date.text|truncate(40)|e }}</a>{% endif %}&nbsp;|&nbsp;{% if entry.next_by_date %}<a href="{{ entry.next_by_date.get_url() }}">{{ entry.next_by_date.text|truncate(40)|e }}</a>{% endif %}</p>
+<p>{% if entry.prev_by_date %}<a href="{{ entry.prev_by_date.get_url() }}" title="poprzedni">{{ entry.prev_by_date.text|truncate(40)|e }}</a>{% endif %}&nbsp;|&nbsp;{% if entry.next_by_date %}<a href="{{ entry.next_by_date.get_url() }}" title="następny">{{ entry.next_by_date.text|truncate(40)|e }}</a>{% endif %}</p>
 </div>
 <p><cite>{{ entry.text|e|replace("\n", "<br />") }}</cite></p>
 {% if entry.comments.count() %}

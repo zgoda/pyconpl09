@@ -55,14 +55,17 @@ class Entry(mongokit.MongoDocument):
 
     @property
     def prev_by_date(self):
+        query = {
+            'date_added': {'$lt': self.date_added},
+        }
         try:
-            return list(self.__class__.all({'date_added': {'$lt': self.date_added}}).sort('date_added', pymongo.DESCENDING).limit(1))[0]
+            return list(self.__class__.all(query).sort('date_added', pymongo.DESCENDING).limit(1))[0]
         except IndexError:
             return None
 
     @property
     def comments(self):
-        return Comment.all({'entry': DBRef(self.collection_name, self['_id'])}).sort('date_added', pymongo.DESCENDING)
+        return Comment.all({'entry': DBRef(self.collection_name, self['_id'])}).sort('date_added', pymongo.ASCENDING)
 
 
 class Comment(mongokit.MongoDocument):
