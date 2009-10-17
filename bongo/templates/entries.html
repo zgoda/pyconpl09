@@ -10,7 +10,7 @@
 <p>Wszystkie złote myśli, jakie dodali nasi użytkownicy</p>
 <ul>
 {% for entry in pagination.entries %}
-<li>{{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez {{ entry.author|e }}: "<a href="{{ entry.get_url() }}">{{ entry.text|truncate(50)|e }}</a>" {% if entry.comments.count() %}(komentarzy: {{ entry.comments.count() }}){% endif %}</li>
+<li>{{ format_datetime(entry.date_added, "d MMMM yyyy 'o' HH:mm") }} przez {{ entry.author|e }}: "<a href="{{ entry.get_url() }}">{{ entry.text|truncate(50)|e }}</a>" {% if entry.comments.count() %}(komentarzy: {{ entry.comments.count() }}){% endif %}</li>
 {% endfor %}
 </ul>
 <div class="pagination">

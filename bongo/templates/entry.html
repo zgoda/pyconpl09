@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Jedna Złota Myśl{% endblock %}
+{% block title %}{{ entry.text|truncate(40)|e }}{% endblock %}
 
 {% block content %}
 <div class="post">
 <h2 class="title">Złota Myśl</h2>
-<p class="byline">Dodana {{ entry.date_added.strftime("%Y-%m-%d") }} o {{ entry.date_added.strftime("%H:%M") }} przez użytkownika {{ entry.author|e }}</p>
+<p class="byline">Dodana {{ format_datetime(entry.date_added, "d MMMM yyyy 'o' HH:mm") }} przez użytkownika {{ entry.author|e }}</p>
 <div class="entry">
 <div style="text-align:center">
 <p>{% if entry.prev_by_date %}<a href="{{ entry.prev_by_date.get_url() }}" title="poprzedni">{{ entry.prev_by_date.text|truncate(40)|e }}</a>{% endif %}&nbsp;|&nbsp;{% if entry.next_by_date %}<a href="{{ entry.next_by_date.get_url() }}" title="następny">{{ entry.next_by_date.text|truncate(40)|e }}</a>{% endif %}</p>
@@ -15,7 +15,7 @@
 <h4 class="title">Komentarze ({{ entry.comments.count() }}):</h4>
 <ul>
 {% for comment in entry.comments %}
-<li>{{ comment.text|e }} - {{ comment.author|e }}, {{ comment.date_added.strftime("%Y-%m-%d") }} o {{ comment.date_added.strftime("%H:%M") }}</li>
+<li>{{ comment.text|e }} - {{ comment.author|e }}, {{ format_datetime(comment.date_added, "d MMMM yyyy 'o' HH:mm") }}</li>
 {% endfor %}
 </ul>
 {% endif %}
