@@ -21,7 +21,7 @@ class Bongo(object):
             os.makedirs(settings.SESSION_PATH)
         self.dispatch = SessionMiddleware(self.dispatch, storage_class(path=settings.SESSION_PATH))
         self.dispatch = SharedDataMiddleware(self.dispatch, {
-            '/media': os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media'),
+            '/media': settings.MEDIA_ROOT,
         })
 
     def __call__(self, environ, start_response):
