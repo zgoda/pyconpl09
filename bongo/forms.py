@@ -4,7 +4,6 @@ import wtforms as forms
 from wtforms import validators
 
 from bongo.models import Entry, Comment
-from bongo.utils import local
 
 
 class EntryForm(forms.Form):

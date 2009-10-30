@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 from werkzeug import Local, LocalManager
 from werkzeug import Response
 from werkzeug import import_string
