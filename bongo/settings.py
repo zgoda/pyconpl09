@@ -11,6 +11,10 @@ SITE = {
     'domain': u'localhost:5000',
 }
 
+TEMPLATE_DIRS = (
+    os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'bongo.context_processors.site',
     'bongo.context_processors.latest',
@@ -19,3 +23,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 REQUEST_PROCESSORS = (
     'bongo.request_processors.SessionRequestProcessor',
 )
+
+TIME_ZONE = 'Europe/Warsaw'
+
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')

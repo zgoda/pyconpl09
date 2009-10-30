@@ -30,13 +30,13 @@ def expose(rule, **kw):
     return decorate
 
 def datetime_format(dt, format):
-    tz = pytz.timezone('Europe/Warsaw')
+    tz = pytz.timezone(settings.TIME_ZONE)
     return babel.dates.format_datetime(dt, format, tzinfo=tz)
 
 def url_for(endpoint, _external=False, **values):
     return local.url_adapter.build(endpoint, values, force_external=_external)
 
-env = Environment(loader=FileSystemLoader(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'templates')))
+env = Environment(loader=FileSystemLoader(settings.TEMPLATE_DIRS))
 env.globals['url_for'] = url_for
 # babel
 env.globals['format_datetime'] = datetime_format
