@@ -68,3 +68,4 @@ def entry(request, entry_id):
         'form': form,
     }
     return render_template('entry.html', **ctx)
+
